@@ -1,0 +1,33 @@
+apply plugin : 'java'
+apply plugin : "kotlin"
+
+buildscript {
+    ext.kotlin_version = '1.1.4-3'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "commons-codec:commons-codec:1.10"
+    // compile "com.sparkjava:spark-kotlin:1.0.0-alpha"
+    compile "org.springframework:spring-oxm:4.3.11.RELEASE"
+    compile "com.thoughtworks.xstream:xstream:1.4.10"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8"
+    compile "org.slf4j:slf4j-simple:1.7.25"
+    compile "com.google.code.gson:gson:2.8.0"
+    compile "io.jsonwebtoken:jjwt:0.7.0"
+    compile "com.sparkjava:spark-core:2.6.0"
+    compile "com.rabbitmq:amqp-client:4.2.0"
+    compile "redis.clients:jedis:2.9.0"
+    testCompile "junit:junit:4.12"
+}

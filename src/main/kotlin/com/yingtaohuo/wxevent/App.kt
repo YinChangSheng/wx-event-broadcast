@@ -33,11 +33,14 @@ fun main(args: Array<String>) {
     val channel = conn.createChannel()
 
     post(WX3rdComponentEntryPoint, { req, resp ->
-        req.params("signature")
-        req.params("timestamp")
-        req.params("nonce")
-        req.params("encrypt_type")
-        req.params("msg_signature")
+
+        val signature = req.params("signature")
+        val timestamp = req.params("timestamp")
+        val nonce = req.params("nonce")
+        val encryptType = req.params("encrypt_type")
+        val msgSignature = req.params("msg_signature")
+
+        req.body()
 
         // val ticket = fromXml<ComponentVerifyTicket>(req.body())
         // channel.basicPublish("wxtoken", "wx3rd_ticket", null, Gson().toJson(ticket).toByteArray())
