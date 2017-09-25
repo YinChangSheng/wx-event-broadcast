@@ -19,7 +19,7 @@ RUN cd /tmp/build && mv build/libs/*.jar /app.jar && cd / && rm -rf /tmp/build
 VOLUME /tmp
 VOLUME /log
 
-EXPOSE 8080
+EXPOSE 9002
 
 # ENTRYPOINT ["java", "$JAVA_OPTS -Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
 

@@ -16,8 +16,8 @@ RUN mv -f UnlimitedJCEPolicyJDK8/US_export_policy.jar ${JAVA_HOME}/jre/lib/secur
 VOLUME /tmp
 VOLUME /log
 
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 9002
+EXPOSE 9001
 
 # ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]
 
