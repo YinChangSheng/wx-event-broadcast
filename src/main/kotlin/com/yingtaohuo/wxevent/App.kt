@@ -139,6 +139,8 @@ object App {
         // post("/wx/3rd/notify", { req, resp ->
         post("/wx3rd/authorize", "application/xml", { req, resp ->
 
+            resp.type("application/json;charset=UTF-8")
+
             logger.debug(" route /wx3rd/authorize -> url: " + req.url())
             logger.debug(" route /wx3rd/authorize -> queryString: " + req.queryString())
             logger.debug(" route /wx3rd/authorize -> body: " + req.body())
@@ -162,6 +164,7 @@ object App {
             } else {
                 mapOf( "msg" to "sign error" )
             }
+
         }, toJson)
 
         // A wx3rd 120.132.29.90
