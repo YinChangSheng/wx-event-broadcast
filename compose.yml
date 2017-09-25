@@ -1,0 +1,26 @@
+ssoweb_dev:
+  image: daocloud.io/nizhuantech/ythsso:dev-69b7757
+  container_name: sso_dev
+  volumes:
+  - /data/ythsso_dev:/log:rw
+  - /tmp
+  environment:
+  - JAVA_OPTS=-server -Xms512m -Xmx512m -Dspring.profiles.active=test -Duser.timezone=GMT+8
+  - PORT=8081
+  ports:
+  - 8081:8081
+  restart: always
+  privileged: true
+ssoweb:
+  image: daocloud.io/nizhuantech/ythsso:dev-1ccbd47
+  container_name: sso_prod
+  volumes:
+  - /data/ythsso:/log:rw
+  - /tmp
+  environment:
+  - JAVA_OPTS=-server -Xms800m -Xmx800m -Dspring.profiles.active=development -Duser.timezone=GMT+8
+  - PORT=8080
+  ports:
+  - 8080:8080
+  restart: always
+  privileged: true

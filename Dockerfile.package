@@ -1,0 +1,24 @@
+FROM java:8-jdk
+MAINTAINER Yinchangsheng <yinchangsheng@gmail.com>
+
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+
+COPY app.jar /app.jar
+
+RUN wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"
+RUN unzip jce_policy-8.zip
+
+RUN cd UnlimitedJCEPolicyJDK8/
+
+RUN mv -f local_policy.jar ${JAVA_HOME}/jre/lib/security/
+RUN mv -f US_export_policy.jar ${JAVA_HOME}/jre/lib/security/
+
+VOLUME /tmp
+VOLUME /log
+
+EXPOSE 8080
+EXPOSE 8081
+
+# ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]
+
+ENTRYPOINT java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar

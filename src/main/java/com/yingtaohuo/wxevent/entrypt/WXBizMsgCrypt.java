@@ -15,6 +15,7 @@ package com.yingtaohuo.wxevent.entrypt;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 import javax.crypto.Cipher;
@@ -141,14 +142,14 @@ public class WXBizMsgCrypt {
 	 * @return 解密得到的明文
 	 * @throws AesException aes解密失败
 	 */
-	String decrypt(String text) throws AesException {
+	public String decrypt(String text) throws AesException {
 		byte[] original;
 		try {
 			// 设置解密模式为AES的CBC模式
 			Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
-			SecretKeySpec key_spec = new SecretKeySpec(aesKey, "AES");
+			SecretKeySpec keySpec = new SecretKeySpec(aesKey, "AES");
 			IvParameterSpec iv = new IvParameterSpec(Arrays.copyOfRange(aesKey, 0, 16));
-			cipher.init(Cipher.DECRYPT_MODE, key_spec, iv);
+			cipher.init(Cipher.DECRYPT_MODE, keySpec, iv);
 
 			// 使用BASE64对密文进行解码
 			byte[] encrypted = Base64.decodeBase64(text);
@@ -160,7 +161,7 @@ public class WXBizMsgCrypt {
 			throw new AesException(AesException.DecryptAESError);
 		}
 
-		String xmlContent, from_appid;
+		String xmlContent, fromAppid;
 		try {
 			// 去除补位字符
 			byte[] bytes = PKCS7Encoder.decode(original);
@@ -171,7 +172,7 @@ public class WXBizMsgCrypt {
 			int xmlLength = recoverNetworkBytesOrder(networkOrder);
 
 			xmlContent = new String(Arrays.copyOfRange(bytes, 20, 20 + xmlLength), CHARSET);
-			from_appid = new String(Arrays.copyOfRange(bytes, 20 + xmlLength, bytes.length),
+			fromAppid = new String(Arrays.copyOfRange(bytes, 20 + xmlLength, bytes.length),
 					CHARSET);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -179,7 +180,7 @@ public class WXBizMsgCrypt {
 		}
 
 		// appid不相同的情况
-		if (!from_appid.equals(appId)) {
+		if (!fromAppid.equals(appId)) {
 			throw new AesException(AesException.ValidateAppidError);
 		}
 		return xmlContent;
@@ -206,7 +207,7 @@ public class WXBizMsgCrypt {
 		String encrypt = encrypt(getRandomStr(), replyMsg);
 
 		// 生成安全签名
-		if (timeStamp == "") {
+		if (Objects.equals(timeStamp, "")) {
 			timeStamp = Long.toString(System.currentTimeMillis());
 		}
 
@@ -214,8 +215,7 @@ public class WXBizMsgCrypt {
 
 		// System.out.println("发送给平台的签名是: " + signature[1].toString());
 		// 生成发送的xml
-		String result = XMLParse.generate(encrypt, signature, timeStamp, nonce);
-		return result;
+		return XMLParse.generate(encrypt, signature, timeStamp, nonce);
 	}
 
 	/**
@@ -252,8 +252,7 @@ public class WXBizMsgCrypt {
 		}
 
 		// 解密
-		String result = decrypt(encrypt[1].toString());
-		return result;
+		return decrypt(encrypt[1].toString());
 	}
 
 	/**

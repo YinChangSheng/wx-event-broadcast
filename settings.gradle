@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'wx-spacker'
+rootProject.name = 'wx-event-broadcast'
