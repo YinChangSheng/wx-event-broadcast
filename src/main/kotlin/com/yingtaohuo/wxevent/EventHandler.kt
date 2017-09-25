@@ -65,7 +65,7 @@ class EventHandler(
         logger.info("token : " + gson.toJson(token))
         val tokenText = gson.toJson(token)
         // 广播 得到的 component_token
-        channel.basicPublish("wxtoken", "component_token", null, tokenText.toByteArray())
+        // channel.basicPublish("wxtoken", "component_token", null, tokenText.toByteArray())
         // 存储到缓存
         redis.resource.set("component_token:${event.appId}", tokenText)
         redis.resource.close()
