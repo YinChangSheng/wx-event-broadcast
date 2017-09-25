@@ -9,8 +9,6 @@ ADD settings.gradle /tmp/build/
 
 ADD build.gradle /tmp/build/
 
-ADD patch /tmp/build/patch
-
 ADD src /tmp/build/src
 
 RUN cd /tmp/build && ./gradlew build -x test
