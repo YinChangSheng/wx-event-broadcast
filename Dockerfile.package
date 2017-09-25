@@ -10,8 +10,8 @@ RUN unzip jce_policy-8.zip
 
 RUN cd UnlimitedJCEPolicyJDK8/
 
-RUN mv -f local_policy.jar ${JAVA_HOME}/jre/lib/security/
-RUN mv -f US_export_policy.jar ${JAVA_HOME}/jre/lib/security/
+RUN mv -f UnlimitedJCEPolicyJDK8/local_policy.jar ${JAVA_HOME}/jre/lib/security/
+RUN mv -f UnlimitedJCEPolicyJDK8/US_export_policy.jar ${JAVA_HOME}/jre/lib/security/
 
 VOLUME /tmp
 VOLUME /log
