@@ -13,10 +13,6 @@ ADD src /tmp/build/src
 
 RUN cd /tmp/build && ./gradlew build -x test
 
-# 拷贝补丁文件
-RUN cd /tmp/build/patch && mv patch/local_policy.jar /local_policy.jar
-RUN cd /tmp/build/patch && mv patch/local_policy.jar /US_export_policy.jar
-
 # 1.拷贝编译结果到指定目录 2.清理编译痕迹
 RUN cd /tmp/build && mv build/libs/*.jar /app.jar && cd / && rm -rf /tmp/build
 
