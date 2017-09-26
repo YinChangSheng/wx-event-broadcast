@@ -126,6 +126,10 @@ object App {
 
     }
 
+    fun destory() {
+        redis.destroy()
+    }
+
     fun start() {
 
         /**
@@ -184,4 +188,13 @@ fun main(args: Array<String>) {
     App.start()
 
     init()
+
+    // 关闭的时候释放资源
+    Runtime.getRuntime().addShutdownHook(object : Thread() {
+        override fun run() {
+            super.run()
+            App.destory()
+        }
+    })
+
 }
