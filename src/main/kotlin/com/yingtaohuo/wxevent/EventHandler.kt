@@ -68,6 +68,7 @@ class EventHandler(
         channel.basicPublish("wxtoken", "component_token", null, tokenText.toByteArray())
         // 存储到缓存
         redis.resource.set("component_token:${event.appId}", tokenText)
+        redis.resource.close()
     }
 
 }
