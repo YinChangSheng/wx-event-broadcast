@@ -31,7 +31,27 @@ class RabbitMQTest {
             conn = createRabbitConn()
             channel = conn.createChannel()
             // 定义 exchange 和 queue
-            // rabbitMQExchangeQueueBind(conn, "wxtoken", "component_token", arrayListOf("sys_order", "test_sys_order"))
+
+            val queueGroup1 = arrayListOf(
+                    "sys_wx3rd",
+                    "sys_wx3rd_test",
+                    "sys_order",
+                    "sys_order_test"
+            ).map { queueName -> Pair(queueName, "component_token") }
+
+            val queueGroup2 = arrayListOf(
+                    EventHandler.WXAuthorize,
+                    EventHandler.WXUnauthorize,
+                    EventHandler.WXUpdateAuthorize,
+                    EventHandler.WXComponentVerifyTicket
+            )
+
+            // 微信令牌
+            rabbitMQExchangeQueueBind(conn, "wxtoken", queueGroup1)
+
+            // 微信第三方平台授权的事件
+            rabbitMQExchangeQueueBind(conn, "wxauthorize", queueGroup2)
+
         }
 
         @AfterClass
@@ -50,12 +70,21 @@ class RabbitMQTest {
 
     @Test
     fun testPublish() {
+        val consumerRabbitMq = createRabbitConn()
+        val _channel = consumerRabbitMq.createChannel()
+        val aaa = """
+            { "appId": "1111", "authorizerAppid": "2222", "authorizationCode": "3333" }
+            """
+        _channel.basicPublish("wxauthorize", "wx.authorized", null, aaa.toByteArray())
+    }
+
+    @Test
+    fun testBasicConsume() {
 
         val consumerRabbitMq = createRabbitConn()
-
         val _channel = consumerRabbitMq.createChannel()
 
-        _channel.basicConsume("test_sys_order", object : Consumer {
+        _channel.basicConsume("sys_order_test", object : Consumer {
             override fun handleRecoverOk(consumerTag: String?) {
                 println("consumer1 handleRecoverOk")
             }

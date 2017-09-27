@@ -126,7 +126,7 @@ object App {
 
     }
 
-    fun destory() {
+    fun destroy() {
         redis.destroy()
     }
 
@@ -158,18 +158,19 @@ object App {
 
             if (signature == msgSignature) {
                 val infoType = AppHelper.getInfoTypeFromEncrypt(encrypt)
+                logger.info("InfoType: $infoType")
                 when (infoType) {
                     "component_verify_ticket" -> eventHandler.handleComponentToken(AppHelper.decrypt(encrypt))
                     "authorized" -> eventHandler.handleAuthorized(AppHelper.decrypt(encrypt))
                     "updateauthorized" -> eventHandler.handleUpdateAuthorized(AppHelper.decrypt(encrypt))
                     "unauthorized" -> eventHandler.handleUnAuthorize(AppHelper.decrypt(encrypt))
                 }
-                mapOf( "msg" to "ok" )
+                "success"
             } else {
-                mapOf( "msg" to "sign error" )
+                "fail"
             }
 
-        }, toJson)
+        })
 
         // A wx3rd 120.132.29.90
     }
@@ -193,7 +194,7 @@ fun main(args: Array<String>) {
     Runtime.getRuntime().addShutdownHook(object : Thread() {
         override fun run() {
             super.run()
-            App.destory()
+            App.destroy()
         }
     })
 

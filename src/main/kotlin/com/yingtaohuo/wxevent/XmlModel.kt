@@ -91,6 +91,7 @@ data class ComponentVerifyTicketEvent(
  *   <InfoType>authorized</InfoType>
  *   <AuthorizerAppid>公众号appid</AuthorizerAppid>
  *   <AuthorizationCode>授权码（code）</AuthorizationCode>
+ *   <PreAuthCode>预授权码</PreAuthCode>
  *   <AuthorizationCodeExpiredTime>过期时间</AuthorizationCodeExpiredTime>
  * </xml>
  **/
@@ -107,6 +108,8 @@ data class ComponentAuthorizedEvent(
         val authorizerAppid: String,
         @XStreamAlias("AuthorizationCode")
         val authorizationCode: String,
+        @XStreamAlias("PreAuthCode")
+        val preAuthCode: String,
         @XStreamAlias("AuthorizationCodeExpiredTime")
         val authorizationCodeExpiredTime: String
 )
@@ -128,6 +131,7 @@ data class ComponentAuthorizedEvent(
  *  <InfoType>updateauthorized</InfoType>
  *  <AuthorizerAppid>公众号appid</AuthorizerAppid>
  *  <AuthorizationCode>授权码（code）</AuthorizationCode>
+ *  <PreAuthCode>预授权码</PreAuthCode>
  *  <AuthorizationCodeExpiredTime>过期时间</AuthorizationCodeExpiredTime>
  * </xml>
  **/
@@ -143,6 +147,8 @@ data class ComponentUpdateAuthorizedEvent(
         val authorizerAppid: String,
         @XStreamAlias("AuthorizationCode")
         val authorizationCode: String,
+        @XStreamAlias("PreAuthCode")
+        val preAuthCode: String,
         @XStreamAlias("AuthorizationCodeExpiredTime")
         val authorizationCodeExpiredTime: String
 )
