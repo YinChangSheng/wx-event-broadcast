@@ -4,6 +4,7 @@ import com.qq.weixin.wx3rd.WXComponentApi
 import com.qq.weixin.wx3rd.WXComponentClient
 import com.qq.weixin.wx3rd.WorkModeProd
 import com.rabbitmq.client.Channel
+import com.rabbitmq.client.Connection
 import com.thoughtworks.xstream.io.xml.StaxDriver
 import com.thoughtworks.xstream.security.NoTypePermission
 import com.thoughtworks.xstream.security.NullPermission
@@ -78,11 +79,13 @@ object App {
 
     private val logger = LoggerFactory.getLogger(App::class.java)
 
-    private val channel: Channel
+    private val channel: Channel?
+
+    private val connection: Connection?
 
     private val componentApi : WXComponentApi
 
-    private val redis: JedisPool
+    private val redis: JedisPool?
 
     private val eventHandler : EventHandler
 
@@ -99,8 +102,8 @@ object App {
         componentApi = WXComponentClient().build(WorkModeProd)
 
         // rabbitmq channel create
-        val conn = createRabbitConn()
-        channel = conn.createChannel()
+        connection = createRabbitConn()
+        channel = connection.createChannel()
 
         val queueGroup1 = arrayListOf(
                 "sys_wx3rd",
@@ -117,17 +120,19 @@ object App {
         )
 
         // 微信令牌
-        rabbitMQExchangeQueueBind(conn, "wxtoken", queueGroup1)
+        rabbitMQExchangeQueueBind(connection, "wxtoken", queueGroup1)
 
         // 微信第三方平台授权的事件
-        rabbitMQExchangeQueueBind(conn, "wxauthorize", queueGroup2)
+        rabbitMQExchangeQueueBind(connection, "wxauthorize", queueGroup2)
 
         eventHandler = EventHandler(redis, channel, componentApi)
 
     }
 
     fun destroy() {
-        redis.destroy()
+        channel?.close()
+        connection?.close()
+        redis?.destroy()
     }
 
     fun start() {
