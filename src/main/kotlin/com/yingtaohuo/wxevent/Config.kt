@@ -23,6 +23,6 @@ object Config {
     const val BroadcastRabbitMQUrl = "amqp://menuxx:28181820@wx3rd.menuxx.com:5692/menuxx"
 
     // token 存储
-    const val redisHost = "redis://:4cj34t4j9@wx3rd.menuxx.com:7389/5"
+    const val redisHost = "redis://:4cj34t4j9@wx3rd.menuxx.com:7389/9"
 
 }
