@@ -106,8 +106,6 @@ object App {
         channel = connection.createChannel()
 
         val queueGroup1 = arrayListOf(
-                "sys_wx3rd",
-                "sys_wx3rd_test",
                 "sys_order",
                 "sys_order_test"
         ).map { queueName -> Pair(queueName, "component_token") }

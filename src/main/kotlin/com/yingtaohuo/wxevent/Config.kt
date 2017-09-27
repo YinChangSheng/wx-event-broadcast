@@ -9,10 +9,6 @@ object Config {
 
     const val Port = 9002
 
-    const val WX3rdAuthorizeEntryPoint = "/wx3rd/entry"
-
-    const val WX3rdMsgEventEntryPoint = "/wx3rd/:appId/callback"
-
     // 第三方平台相关
     const val WX3rdAppId = "wxb3d033d520d15fe7"
     const val WX3rdAppKey = "gh_e9100e798b39"
