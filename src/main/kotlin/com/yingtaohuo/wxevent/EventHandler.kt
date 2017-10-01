@@ -70,7 +70,11 @@ class EventHandler(
         logger.info("token : " + gson.toJson(token))
         val tokenText = gson.toJson(token)
         // 广播 得到的 component_token
-        channel.basicPublish("wxtoken", "component_token", null, tokenText.toByteArray())
+        val props = AMQP.BasicProperties.Builder()
+                .contentEncoding("UTF-8")
+                .contentType("application/json")
+                .build()
+        channel.basicPublish("wxtoken", "component_token", props, tokenText.toByteArray())
         // 存储到缓存
         redis.resource.use { jedis ->
             jedis.set("component_token:${event.appId}", tokenText)
