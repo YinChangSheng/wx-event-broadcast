@@ -52,29 +52,27 @@ fun rabbitMQExchangeQueueBind(conn: Connection, exchangeName: String, queueGroup
     }
 }
 
-fun consume(queueName: String) {
+fun dumpConsume(queueName: String) {
 
     println("consume ..")
 
-    val connFactory = ConnectionFactory()
-    connFactory.setUri("amqp://menuxx:28181820@wx3rd.menuxx.com:5692/menuxx")
-    val conn = connFactory.newConnection()
+    val conn = createRabbitConn()
     val channel = conn.createChannel()
     channel.basicConsume(queueName, object : Consumer {
         override fun handleRecoverOk(consumerTag: String?) {
-            println("consumer1 handleRecoverOk")
+            println("consumer handleRecoverOk")
         }
 
         override fun handleConsumeOk(consumerTag: String?) {
-            println("consumer1 handleConsumeOk")
+            println("consumer handleConsumeOk")
         }
 
         override fun handleShutdownSignal(consumerTag: String?, sig: ShutdownSignalException?) {
-            println("consumer1 handleShutdownSignal")
+            println("consumer handleShutdownSignal")
         }
 
         override fun handleCancel(consumerTag: String?) {
-            println("consumer1 handleCancel")
+            println("consumer handleCancel")
         }
 
         override fun handleDelivery(consumerTag: String, envelope: Envelope, properties: AMQP.BasicProperties?, body: ByteArray?) {
@@ -85,7 +83,7 @@ fun consume(queueName: String) {
         }
 
         override fun handleCancelOk(consumerTag: String?) {
-            println("consumer1 handleCancelOk")
+            println("consumer handleCancelOk")
         }
 
     })

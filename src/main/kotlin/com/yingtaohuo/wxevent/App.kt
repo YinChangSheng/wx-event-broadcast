@@ -123,6 +123,9 @@ object App {
         // 微信第三方平台授权的事件
         rabbitMQExchangeQueueBind(connection, "wxauthorize", queueGroup2)
 
+        // 该消息暂无人接受，自动处理掉
+        dumpConsume("wx_component_verify_ticket")
+
         eventHandler = EventHandler(redis, channel, componentApi)
 
     }
