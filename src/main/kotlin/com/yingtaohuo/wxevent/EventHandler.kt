@@ -2,7 +2,9 @@ package com.yingtaohuo.wxevent
 
 import com.google.gson.Gson
 import com.qq.weixin.wx3rd.WXComponentApi
+import com.rabbitmq.client.BasicProperties
 import com.rabbitmq.client.Channel
+import com.rabbitmq.client.MessageProperties
 import org.slf4j.LoggerFactory
 import redis.clients.jedis.JedisPool
 
@@ -35,7 +37,11 @@ class EventHandler(
     private val gson = Gson()
 
     fun publishTo(jsonString: String, routingKey: String) {
-        channel.basicPublish("wxauthorize", routingKey, null, jsonString.toByteArray())
+        val props = MessageProperties.MINIMAL_BASIC.builder()
+                .contentEncoding("UTF-8")
+                .contentType("application/json")
+                .build()
+        channel.basicPublish("wxauthorize", routingKey, props, jsonString.toByteArray())
     }
 
     fun handleAuthorized(event: ComponentAuthorizedEvent) {
