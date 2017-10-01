@@ -73,6 +73,7 @@ class EventHandler(
         val props = AMQP.BasicProperties.Builder()
                 .contentEncoding("UTF-8")
                 .contentType("application/json")
+                .type("com.yingtaohuo.configure.WXComponentToken")
                 .build()
         channel.basicPublish("wxtoken", "component_token", props, tokenText.toByteArray())
         // 存储到缓存
