@@ -128,12 +128,12 @@ object App {
 
         eventHandler = EventHandler(redis, channel, componentApi)
 
-//        eventHandler.handleComponentToken(ComponentVerifyTicketEvent(
-//                "wxb3d033d520d15fe7",
-//                "ticket@@@MuZFRUhBL32svsQ-w5oGiI8u2u2SPBntTOpEvE0CvFz7r6w1bqkSXQAEzHSdVEOOjUWftKVF5LTNdOw1HWS1wQ",
-//                "component_verify_ticket",
-//                1506879389
-//        ))
+        eventHandler.handleComponentToken(ComponentVerifyTicketEvent(
+                "wxb3d033d520d15fe7",
+                "ticket@@@MuZFRUhBL32svsQ-w5oGiI8u2u2SPBntTOpEvE0CvFz7r6w1bqkSXQAEzHSdVEOOjUWftKVF5LTNdOw1HWS1wQ",
+                "component_verify_ticket",
+                1506879389
+        ))
 
     }
 
