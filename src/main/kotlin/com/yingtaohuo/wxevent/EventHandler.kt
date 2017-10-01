@@ -2,9 +2,8 @@ package com.yingtaohuo.wxevent
 
 import com.google.gson.Gson
 import com.qq.weixin.wx3rd.WXComponentApi
-import com.rabbitmq.client.BasicProperties
+import com.rabbitmq.client.AMQP
 import com.rabbitmq.client.Channel
-import com.rabbitmq.client.MessageProperties
 import org.slf4j.LoggerFactory
 import redis.clients.jedis.JedisPool
 
@@ -37,7 +36,7 @@ class EventHandler(
     private val gson = Gson()
 
     fun publishTo(jsonString: String, routingKey: String) {
-        val props = MessageProperties.MINIMAL_BASIC.builder()
+        val props = AMQP.BasicProperties.Builder()
                 .contentEncoding("UTF-8")
                 .contentType("application/json")
                 .build()
