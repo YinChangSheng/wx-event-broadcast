@@ -25,7 +25,7 @@ fun rabbitMQExchangeQueueBind(conn: Connection, exchangeName: String, queueGroup
 
     val channel = conn.createChannel()
 
-    val isOk = channel.exchangeDeclare(exchangeName, "fanout", true)
+    val isOk = channel.exchangeDeclare(exchangeName, "fanout", true, false, null)
 
     if (logger.isDebugEnabled) {
         if ( isOk != null ) {
@@ -37,7 +37,9 @@ fun rabbitMQExchangeQueueBind(conn: Connection, exchangeName: String, queueGroup
 
     for ((queueName, routingKey) in queueGroup) {
         try {
-            val queue = channel.queueDeclare(queueName, true, false, false, null)
+            val queue = channel.queueDeclare(queueName, true, false, false, hashMapOf(
+                    "x-message-ttl" to 30000
+            ) as Map<String, Any>?)
             if (logger.isDebugEnabled) {
                 logger.debug("${queue.queue} consumer count ${queue.consumerCount}, message count ${queue.messageCount}")
             }
