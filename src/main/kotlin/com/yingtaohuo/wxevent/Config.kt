@@ -16,9 +16,9 @@ object Config {
     const val WX3rdAppSecret = "99454ebe9eb76b704d9dfd8c34cc310b"
     const val WX3rdEncodingAesKey = "kat52d5719d320nEj2A6l19u14H21ct2aI8K08rltKl"
 
-    const val BroadcastRabbitMQUrl = "amqp://ythrabbit:28181820@120.132.29.90:5698/yth"
+    const val BroadcastRabbitMQUrl = "amqp://ythrabbit:28181820@yingtaohuo.com:5698/yth"
 
     // token 存储
-    const val redisHost = "redis://:4cj34t4j9@120.132.29.90:7389/9"
+    const val redisHost = "redis://:4cj34t4j9@yingtaohuo.com:7389/9"
 
 }
